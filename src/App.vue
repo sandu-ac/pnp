@@ -4,9 +4,9 @@
             {{ title }}
         </div>
 
-        <div v-if="checkBtnDisabled" class="error">*Choose at least 2 persons from the total of {{ possibleHost.length }}.</div>
-
         <div v-if="!showHide" class="cards">
+            <div v-if="checkBtnDisabled" class="error">*Choose at least 2 persons from the total of {{ possibleHost.length }}.</div>
+
             <div
                 v-for="person in possibleHost"
                 :class="['card', {selected: person.isSelected}]"
@@ -132,13 +132,17 @@ export default {
         font-weight: 700;
         text-shadow: 0 1px 0 #ccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9, 0 5px 0 #aaa, 0 6px 1px rgba(0, 0, 0, 0.1), 0 0 5px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.3), 0 3px 5px rgba(0, 0, 0, 0.2), 0 5px 10px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.2), 0 20px 20px rgba(0, 0, 0, 0.15);
         text-align: center;
-        margin-bottom: 50px;
+        margin-bottom: 15px;
     }
 
     .error {
+        position: absolute;
         color: #ffffff;
         background-color: #f54337;
         margin: 0 auto 25px;
+        top: 0;
+        left: 0;
+        right: 0;
         font-weight: 700;
         padding: 5px 10px;
         text-align: center;
@@ -151,7 +155,7 @@ export default {
         min-height: 50px;
         line-height: 2.455em;
         max-width: 100%;
-        margin: 25px 0;
+        margin: 50px 0 25px;
         text-align: center;
         border: 3px solid #ff686b;
         padding: 25px 0;
@@ -231,14 +235,16 @@ export default {
         }
 
     .cards {
+        position: relative;
         display: grid;
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
         margin: 0px auto;
+        padding: 50px 0 0;
         width: calc(200px * 6);
     }
 
     .card {
-        margin: 0 0 25px;
+        margin: 0 0 15px;
         text-align: center;
         padding: 0px;
         border-width: 3px;
