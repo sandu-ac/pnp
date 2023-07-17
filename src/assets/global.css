@@ -1,0 +1,116 @@
+body {
+font-family: 'Open Sans', 'Helvetica Neue', 'Arial', sans-serif;
+font-size: 20px;
+letter-spacing: 1.5px;
+background-color: #84dcc6;
+margin: 0;
+}
+
+.container {
+display: block;
+width: 1200px;
+margin: 50px auto;
+padding: 10px;
+}
+
+.title {
+color: #ffffff;
+font-size: 50px;
+font-weight: 700;
+text-shadow: 0 1px 0 #ccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9, 0 5px 0 #aaa, 0 6px 1px rgba(0, 0, 0, 0.1), 0 0 5px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.3), 0 3px 5px rgba(0, 0, 0, 0.2), 0 5px 10px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.2), 0 20px 20px rgba(0, 0, 0, 0.15);
+text-align: center;
+margin-bottom: 15px;
+}
+
+.error {
+position: absolute;
+color: #ffffff;
+background-color: #f54337;
+margin: 0 auto 25px;
+top: 0;
+left: 0;
+right: 0;
+font-weight: 700;
+padding: 5px 10px;
+text-align: center;
+max-width: 550px;
+}
+
+.btn-group {
+display: block;
+margin: 0 auto;
+text-align: center;
+}
+
+.btn {
+display: inline-block;
+margin: 0 15px;
+;
+font-size: 20px;
+letter-spacing: 1.5px;
+text-align: center;
+padding: 15px 40px;
+border-radius: 10px;
+border: 0;
+background-color: #ffa69e;
+transition: all 0.3s ease;
+box-shadow: #ff686b 0px 10px 0px 0px;
+color: #ffffff;
+font-weight: 700;
+cursor: pointer;
+}
+
+.btn:hover {
+    box-shadow: #ff686b 0px 7px 0px 0px;
+}
+
+.btn:active {
+    background-color: #ffa69e;
+    /*50, 168, 80*/
+    box-shadow: #ff686b 0px 0px 0px 0px;
+    transform: translateY(5px);
+    transition: 200ms;
+}
+
+.btn:disabled,
+.btn[disabled] {
+    cursor: not-allowed;
+    background-color: #cccccc;
+    color: #666666;
+    box-shadow: #666666 0px 7px 0px 0px;
+    opacity: 0.5;
+}
+
+.form-group {
+    display: block;
+    margin-bottom: 25px;
+}
+
+.form-group label,
+.form-group input {
+    display: block;
+}
+
+.form-group input {
+    width: 100%;
+    background-color: #ffffff;
+    border: 3px solid #ff686b;
+    border-radius: 10px;
+    display: inline-block;
+    font: inherit;
+    line-height: 1.8em;
+    padding: 5px 15px;
+    margin: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    background-repeat: no-repeat;
+    color: #ff686b;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.form-group input:focus {
+    border-color: #a5ffd6;
+    outline: 0;
+  }
