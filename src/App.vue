@@ -5,7 +5,11 @@
         </div>
 
         <div v-show="!showHide" class="cards">
-            <div v-if="checkBtnDisabled" class="error">*Choose at least 2 persons from the total of {{ possibleHost.length }}.</div>
+            <div v-if="checkBtnDisabled 
+                        && possibleHost.filter(i =>  i.archive === false).length > 1" 
+                class="error">
+                *Choose at least 2 persons from the total of {{ possibleHost.filter(i =>  i.archive === false).length }} available.
+            </div>
             <card v-for="(person, index) in possibleHost.filter(i =>  i.archive === false)"
                   :key="index"
                   :person="person"
@@ -147,8 +151,9 @@
         display: block;
         min-height: 50px;
         line-height: 2.455em;
-        max-width: 100%;
-        margin: 50px 0 25px;
+        width: 100%;
+        max-width: 700px;
+        margin: 40px auto 45px;
         text-align: center;
         border: 3px solid #ff686b;
         padding: 25px 0;

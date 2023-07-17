@@ -14,8 +14,12 @@
       <teleport v-if="showModalArchive" to='#modals'>
         <Modal :title="'Are you sure?'" theme="sale" @close="toggleArchiveModal">
             <template v-slot:modal-content>
-                Clicking 'Yes' you will archive <b>{{ person.firstName }} {{ initialsLastName(person.lastName) }}</b>?
-                <button class="btn" @click="changeArchive">Yes</button>
+              <p class="text-center">By clicking <b>'Yes'</b> you will archive <b>{{ person.firstName }} {{ initialsLastName(person.lastName) }}</b></p>
+
+                <div class="btn-group">
+                  <button class="btn" @click="changeArchive">Yes</button>
+                  <button class="btn btn-secondary" @click="toggleArchiveModal">No</button>
+                </div>
             </template>
         </Modal>
     </teleport>
@@ -66,7 +70,7 @@
         display: grid;
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
         margin: 0px auto;
-        padding: 50px 0 0;
+        padding: 30px 0 30px;
         width: calc(200px * 6);
     }
 
@@ -142,7 +146,6 @@
     }
 
     .card .icon-x {
-      z-index: 11;
       cursor: pointer;
       background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAyNy43LjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiDQoJIHZpZXdCb3g9IjAgMCAzMCAzMCIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgMzAgMzA7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxwYXRoIGQ9Ik0yMy41LDIyLjVjMC4zLDAuMywwLjMsMC44LDAsMS4xYzAsMC4yLTAuMywwLjItMC41LDAuMmMtMC4yLDAtMC41LDAtMC42LTAuMkwxNSwxNi4xbC03LjUsNy41YzAsMC4yLTAuMywwLjItMC41LDAuMg0KCWMtMC4yLDAtMC41LDAtMC42LTAuMmMtMC4zLTAuMy0wLjMtMC44LDAtMS4xbDcuNS03LjVMNi41LDcuNmMtMC4zLTAuMy0wLjMtMC44LDAtMS4xczAuOC0wLjMsMS4xLDBsNy41LDcuNWw3LjUtNy41DQoJYzAuMy0wLjMsMC44LTAuMywxLjEsMHMwLjMsMC44LDAsMS4xTDE2LjEsMTVMMjMuNSwyMi41eiIvPg0KPC9zdmc+DQo=) no-repeat center center;
       height: 20px;
@@ -162,12 +165,14 @@
     }
 
     .card .icon-x:hover {
-      background-color: rgba(0, 0, 0, .2);
+      background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAyNy43LjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiDQoJIHZpZXdCb3g9IjAgMCAzMCAzMCIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgMzAgMzA7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+DQoJLnN0MHtmaWxsOiNGRkZGRkY7fQ0KPC9zdHlsZT4NCjxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik0yMy41LDIyLjVjMC4zLDAuMywwLjMsMC44LDAsMS4xYzAsMC4yLTAuMywwLjItMC41LDAuMnMtMC41LDAtMC42LTAuMkwxNSwxNi4xbC03LjUsNy41DQoJYzAsMC4yLTAuMywwLjItMC41LDAuMnMtMC41LDAtMC42LTAuMmMtMC4zLTAuMy0wLjMtMC44LDAtMS4xbDcuNS03LjVMNi41LDcuNmMtMC4zLTAuMy0wLjMtMC44LDAtMS4xczAuOC0wLjMsMS4xLDBsNy41LDcuNQ0KCWw3LjUtNy41YzAuMy0wLjMsMC44LTAuMywxLjEsMHMwLjMsMC44LDAsMS4xTDE2LjEsMTVMMjMuNSwyMi41eiIvPg0KPC9zdmc+DQo=) no-repeat center center;
+      background-color: #ff686b;
+      opacity: 1;
     }
 
-    /* .card:hover .icon-x {
+    .card:hover .icon-x {
       display: block;
-    } */
+    }
 
     .card .name {
         display: block;
