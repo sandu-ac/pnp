@@ -12,7 +12,7 @@
       </div>
 
       <teleport v-if="showModalArchive" to='#modals'>
-        <Modal :title="'Are you sure?'" theme="sale" @close="toggleArchiveModal">
+        <Modal :title="'Are you sure?'" @close="toggleArchiveModal">
             <template v-slot:modal-content>
               <p class="text-center">By clicking <b>'Yes'</b> you will archive <b>{{ person.firstName }} {{ initialsLastName(person.lastName) }}</b></p>
 
@@ -86,7 +86,6 @@
         position: relative;
         width: 180px;
         background-color: #ffffff;
-        font-size: 16px;
         -webkit-border-radius: 10px;
         -moz-border-radius: 10px;
         border-radius: 10px;
@@ -106,15 +105,15 @@
         position: absolute;
         text-align: center;
         margin: 0 auto;
-        width: 100px;
-        height: 25px;
         padding: 0 10px;
+        width: 100px;
+        height: 20px;        
         left: 0;
         right: 0;
-        bottom: 0;
+        bottom: 0;        
         font-size: 12px;
-        line-height: 26px;
-        font-weight: 700;
+        line-height: 2em;
+        font-weight: 500;
         text-transform: uppercase;
         border-width: 3px 3px 0px 3px;
         border-style: solid;

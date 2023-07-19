@@ -48,7 +48,11 @@ body {
     letter-spacing: 1.5px;
     background-color: #84dcc6;
     margin: 0;
-    line-height: 1;
+    line-height: 2em;
+}
+
+h1 {
+    font-size: 28px;
 }
 
 .container {
@@ -60,7 +64,7 @@ body {
 
 .title {
     color: #ffffff;
-    font-size: 50px;
+    font-size: 40px;
     font-weight: 700;
     text-shadow: 0 1px 0 #ccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9, 0 5px 0 #aaa, 0 6px 1px rgba(0, 0, 0, 0.1), 0 0 5px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.3), 0 3px 5px rgba(0, 0, 0, 0.2), 0 5px 10px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.2), 0 20px 20px rgba(0, 0, 0, 0.15);
     text-align: center;
@@ -76,7 +80,7 @@ body {
     left: 0;
     right: 0;
     font-weight: 700;
-    padding: 5px 10px;
+    padding: 5px 5px;
     text-align: center;
     max-width: 700px;
 }
@@ -87,20 +91,24 @@ body {
     text-align: center;
 }
 
-.btn {
+.btn-group .btn {
     display: inline-block;
-    margin: 0 15px;
-    font-size: 20px;
+  }
+
+.btn {
+    font-size: 16px;
+    font-weight: 700;
+    display: inline-block;
+    margin: 0 10px;   
     letter-spacing: 1.5px;
     text-align: center;
-    padding: 15px 30px;
+    padding: 15px 25px;
     border-radius: 10px;
     border: 0;
     background-color: #ffa69e;
     transition: all 0.3s ease;
     box-shadow: #ff686b 0px 10px 0px 0px;
     color: #ffffff;
-    font-weight: 700;
     cursor: pointer;
 }
 
@@ -165,7 +173,6 @@ body {
     box-sizing: border-box;
     background-repeat: no-repeat;
     color: #ff686b;
-    font-size: 20px;
     font-weight: 700;
 }
 

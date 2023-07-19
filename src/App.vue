@@ -1,20 +1,25 @@
 <template>
     <div class="container">
+        <div v-if="checkBtnDisabled 
+                    && possibleHost.filter(i =>  i.archive === false).length > 1" 
+            class="error">
+            Choose at least 2 persons from the total of {{ possibleHost.filter(i =>  i.archive === false).length }} available.
+        </div>
+
         <div class="title">
             {{ title }}
         </div>
 
-        <div v-show="!showHide" class="cards">
-            <div v-if="checkBtnDisabled 
-                        && possibleHost.filter(i =>  i.archive === false).length > 1" 
-                class="error">
-                *Choose at least 2 persons from the total of {{ possibleHost.filter(i =>  i.archive === false).length }} available.
-            </div>
+        <div v-show="!showHide" class="cards">            
             <card v-for="(person, index) in possibleHost.filter(i =>  i.archive === false)"
                   :key="index"
                   :person="person"
                   @changeSelected="changeIsSelected"
                   @changeArchive="changeIsArchive" />
+
+            <div class="add" @click.left="toggleModal">                        
+                <span class="icon-add" />
+            </div>
         </div>
 
         <div v-show="showHide" class="next-host" />
@@ -34,10 +39,8 @@
         </div>
     </div>
 
-    <button @click.left="toggleModal" style="display: noone;">Add</button>
-
     <teleport v-if="showModal" to='#modals'>
-        <Modal :title="'Add a new person'" theme="sale" @close="toggleModal">
+        <Modal :title="'Add a new person'" @close="toggleModal">
             <template v-slot:modal-content>
                 <div class="form-group">
                     <label for="firstName">First name</label>
@@ -47,7 +50,10 @@
                     <label for="lastName">Last name</label>
                     <input id="lastName" name="lastName" type="text" />
                 </div>
-                <button class="btn">Save</button>
+                <div class="btn-group">
+                    <button class="btn">Save</button>
+                    <button class="btn btn-secondary" @click="toggleModal">Cancel</button>
+                </div>
             </template>
         </Modal>
     </teleport>
@@ -150,7 +156,6 @@
         position: relative;
         display: block;
         min-height: 50px;
-        line-height: 2.455em;
         width: 100%;
         max-width: 700px;
         margin: 40px auto 45px;
@@ -159,7 +164,6 @@
         padding: 25px 0;
         border-radius: 10px;
         font-weight: 700;
-        font-size: 24px;
         color: #ff686b;
         background-color: #ffffff;
     }
@@ -169,7 +173,6 @@
             display: block;
             color: #ffffff;
             line-height: 1.5em;
-            font-size: 18px;
             font-weight: 500;
             width: 100%;
             background: #ff686b;
@@ -185,5 +188,40 @@
         .next-host p {
             margin: 25px 0 0;
             padding: 0;
+        }
+
+        .add {
+            position: relative;            
+            text-align: center;
+            margin: 0 0 15px;            
+            padding: 0px;
+            border-width: 3px;
+            border-style: solid;
+            border-style: dashed;  
+            border-color: rgba(0, 0, 0, .3);     
+            background-color: #ffffff;
+            cursor: pointer;
+            height: 170px;
+            width: 180px;    
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            border-radius: 10px;           
+        }
+
+        .add:hover {
+            border-color: #000000;
+        }
+
+        .add .icon-add {
+            background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAyNy43LjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiDQoJIHZpZXdCb3g9IjAgMCAzMCAzMCIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgMzAgMzA7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxwYXRoIGQ9Ik0xNSwxLjRDNy41LDEuNCwxLjQsNy41LDEuNCwxNVM3LjUsMjguNiwxNSwyOC42YzcuNiwwLDEzLjYtNi4xLDEzLjYtMTMuNkMyOC42LDcuNSwyMi41LDEuNCwxNSwxLjR6IE0xNSwyNw0KCUM4LjQsMjcsMywyMS42LDMsMTVDMyw4LjQsOC40LDMsMTUsM2M2LjYsMCwxMiw1LjQsMTIsMTJTMjEuNiwyNywxNSwyN3ogTTE5LjgsMTVjMCwwLjUtMC4zLDAuOC0wLjgsMC44aC0zLjJWMTkNCgljMCwwLjUtMC4zLDAuOC0wLjgsMC44cy0wLjgtMC4zLTAuOC0wLjh2LTMuMkgxMWMtMC41LDAtMC44LTAuMy0wLjgtMC44czAuMy0wLjgsMC44LTAuOGgzLjJWMTFjMC0wLjUsMC4zLTAuOCwwLjgtMC44DQoJczAuOCwwLjMsMC44LDAuOHYzLjJIMTlDMTkuNSwxNC4yLDE5LjgsMTQuNSwxOS44LDE1eiIvPg0KPC9zdmc+DQo=) no-repeat center center;
+            height: 100px;
+            width: 100px;
+            display: block;
+            margin: 35px auto;
+            opacity: 0.3;
+        }
+
+        .add:hover .icon-add {
+            opacity: 1;
         }
 </style>
