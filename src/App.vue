@@ -42,18 +42,20 @@
     <teleport v-if="showModal" to='#modals'>
         <Modal :title="'Add a new person'" @close="toggleModal">
             <template v-slot:modal-content>
-                <div class="form-group">
-                    <label for="firstName">First name</label>
-                    <input id="firstName" name="firstName" type="text" />
-                </div>
-                <div class="form-group">
-                    <label for="lastName">Last name</label>
-                    <input id="lastName" name="lastName" type="text" />
-                </div>
-                <div class="btn-group">
-                    <button class="btn">Save</button>
-                    <button class="btn btn-secondary" @click="toggleModal">Cancel</button>
-                </div>
+                <form @submit.prevent="addPerson">
+                    <div class="form-group">
+                        <label for="firstName">First name</label>
+                        <input v-model="firstName" id="firstName" name="firstName" type="text" />
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Last name</label>
+                        <input v-model="lastName" id="lastName" name="lastName" type="text" />
+                    </div>
+                    <div class="btn-group">
+                        <button class="btn">Save</button>
+                        <button class="btn btn-secondary" @click="toggleModal">Cancel</button>
+                    </div>
+                </form>
             </template>
         </Modal>
     </teleport>
@@ -146,6 +148,12 @@
             changeIsArchive(person) {
                 person.isSelected = false;
                 person.archive = true;          
+            },
+            addPerson() {
+                this.toggleModal();
+                const {firstName, lastName, isSelected = true, archive = false} = this;
+                this.possibleHost.push({firstName, lastName, isSelected, archive});
+                this.firstName = this.lastName = '';
             }
         },
     };
