@@ -21,6 +21,9 @@
         default: false
       },
     },
+    emits :{
+      close: null
+    },
     methods: {
       closeModal () {
         this.$emit('close')
@@ -33,6 +36,9 @@
   </script>
   
   <style>
+    body.modal-open {
+      overflow: hidden;
+    }
     .backdrop {
       top: 0;
       position: fixed;      
@@ -41,6 +47,7 @@
       backdrop-filter: blur(5px);
       width: 100%;
       height: 100%;
+      overflow: hidden;
     }
     .modal{
       width: 500px;

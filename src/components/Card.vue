@@ -6,15 +6,14 @@
           <span class="avatar"
                 @click.self="isPersonSelected" />
           <span class="name"
-                @click.self="isPersonSelected">
-                {{ person.firstName }} {{ initialsLastName(person.lastName) }}
-          </span>
+                @click.self="isPersonSelected"
+                v-html="displayPersonName()"/>
       </div>
 
-      <teleport v-if="showModalArchive" to='#modals'>
+      <teleport v-if="showModalArchive" to='body'>
         <Modal :title="'Are you sure?'" @close="toggleArchiveModal">
             <template v-slot:modal-content>
-              <p class="text-center">By clicking <b>'Yes'</b> you will archive <b>{{ person.firstName }} {{ initialsLastName(person.lastName) }}</b></p>
+              <p class="text-center">By clicking <b>'Yes'</b> you will archive <b v-html="displayPersonName()"/>.</p>
 
                 <div class="btn-group">
                   <button class="btn" @click="changeArchive">Yes</button>
@@ -41,6 +40,10 @@
         default: 0
       },
     },
+    emits :{
+      changeSelected: null,
+      changeArchive :null,
+    },
     data() {
       return {
         showModalArchive: false
@@ -55,11 +58,16 @@
         this.$emit('changeArchive', this.person);
       },
       initialsLastName(name) {
-          return `${name.substring(0, 1).toUpperCase()}.`;
+          return `${name.substring(0, 1).toUpperCase()}`;
       },
       toggleArchiveModal() {
           this.showModalArchive = !this.showModalArchive
       },
+      displayPersonName()
+      {
+        const personName = this.person.nickname != '' ? `${this.person.nickname}` : `${this.person.firstName} ${this.initialsLastName(this.person.lastName)}`
+        return personName;
+      }
     }
   }
   </script>

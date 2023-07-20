@@ -17,7 +17,7 @@
                   @changeSelected="changeIsSelected"
                   @changeArchive="changeIsArchive" />
 
-            <div class="add" @click.left="toggleModal">                        
+            <div class="add" @click.left="showTheModal">                        
                 <span class="icon-add" />
             </div>
         </div>
@@ -39,8 +39,8 @@
         </div>
     </div>
 
-    <teleport v-if="showModal" to='#modals'>
-        <Modal :title="'Add a new person'" @close="toggleModal">
+    <teleport v-if="showModal" to='body'>
+        <Modal :title="'Add a new person'" @close="hideTheModal">
             <template v-slot:modal-content>
                 <form @submit.prevent="addPerson">
                     <div class="form-group">
@@ -51,9 +51,13 @@
                         <label for="lastName">Last name</label>
                         <input v-model="lastName" id="lastName" name="lastName" type="text" />
                     </div>
+                    <div class="form-group">
+                        <label for="nickname">Nickname</label>
+                        <input v-model="nickname" id="nickname" name="nickname" type="text" />
+                    </div>
                     <div class="btn-group">
-                        <button class="btn">Save</button>
-                        <button class="btn btn-secondary" @click="toggleModal">Cancel</button>
+                        <button class="btn">Add</button>
+                        <button class="btn btn-secondary" @click="hideTheModal">Cancel</button>
                     </div>
                 </form>
             </template>
@@ -77,23 +81,25 @@
                 showHide: false,
                 showModal: false,
                 btnDisabled: false,
+                firstName: '',
+                lastName: '',
                 possibleHost: [
-                    { firstName: 'Alexandru', lastName: 'Ciobotaru', isSelected: true, archive: false },
-                    { firstName: 'Alex', lastName: 'Bedford', isSelected: true, archive: false },
-                    { firstName: 'Andre', lastName: 'Sovde', isSelected: true, archive: false },
-                    { firstName: 'Callum', lastName: 'Anderson', isSelected: true, archive: false },
-                    { firstName: 'David', lastName: 'Synott', isSelected: true, archive: false },
-                    { firstName: 'Matthew', lastName: 'Fosberry', isSelected: true, archive: false },
-                    { firstName: 'Gavin', lastName: 'Palmer', isSelected: true, archive: false },
-                    { firstName: 'Hamzah', lastName: 'Malik', isSelected: true, archive: false },
-                    { firstName: 'Harrison', lastName: 'Brown', isSelected: true, archive: false },
-                    { firstName: 'James', lastName: 'Darcy', isSelected: true, archive: false },
-                    { firstName: 'James', lastName: 'Stratton', isSelected: true, archive: false },
-                    { firstName: 'Lia', lastName: 'Gallardo', isSelected: true, archive: false },
-                    { firstName: 'Nick', lastName: 'Lornie', isSelected: true, archive: false },
-                    { firstName: 'Phil', lastName: 'Hoy', isSelected: true, archive: false },
-                    { firstName: 'Scott', lastName: 'Milne', isSelected: true, archive: false },
-                    { firstName: 'Steve', lastName: 'Odai', isSelected: true, archive: false },
+                    { firstName: 'Alexandru', lastName: 'Ciobotaru', nickname:'Alex C', isSelected: true, archive: false },
+                    { firstName: 'Alex', lastName: 'Bedford', nickname:'', isSelected: true, archive: false },
+                    { firstName: 'Andre', lastName: 'Sovde', nickname:'Andre', isSelected: true, archive: false },
+                    { firstName: 'Callum', lastName: 'Anderson', nickname:'Call', isSelected: true, archive: false },
+                    { firstName: 'David', lastName: 'Synott', nickname:'David', isSelected: true, archive: false },
+                    { firstName: 'Matthew', lastName: 'Fosberry', nickname:'Fozz', isSelected: true, archive: false },
+                    { firstName: 'Gavin', lastName: 'Palmer', nickname:'Gavin', isSelected: true, archive: false },
+                    { firstName: 'Hamzah', lastName: 'Malik', nickname:'Hamzah', isSelected: true, archive: false },
+                    { firstName: 'Harrison', lastName: 'Brown', nickname:'Harrison', isSelected: true, archive: false },
+                    { firstName: 'James', lastName: 'Darcy', nickname:'', isSelected: true, archive: false },
+                    { firstName: 'James', lastName: 'Stratton', nickname:'', isSelected: true, archive: false },
+                    { firstName: 'Lia', lastName: 'Gallardo', nickname:'Lia', isSelected: true, archive: false },
+                    { firstName: 'Nick', lastName: 'Lornie', nickname:'Nick', isSelected: true, archive: false },
+                    { firstName: 'Phil', lastName: 'Hoy', nickname:'Phil', isSelected: true, archive: false },
+                    { firstName: 'Scott', lastName: 'Milne', nickname:'Scott', isSelected: true, archive: false },
+                    { firstName: 'Steve', lastName: 'Odai', nickname:'Steve', isSelected: true, archive: false },
                 ],
                 selectedHost: [],
             };
@@ -126,21 +132,27 @@
                 const emoji = '⭐';
                 const elem = document.querySelector('.next-host');
                 const randomValue = this.selectedHost[Math.floor(Math.random() * this.selectedHost.length)];
-                const name = this.selectedHost.length !== 0 ? `${randomValue.firstName} ${this.initialsLastName(randomValue.lastName)}` : 'N/A';
-                const val = emoji + name + emoji;
-                const value = emoji.repeat(this.selectedHost.length);
+                const personName = randomValue.nickname != '' ? randomValue.nickname : `${randomValue.firstName} ${this.initialsLastName(randomValue.lastName)}`
+                const name = this.selectedHost.length !== 0 ? personName : 'N/A';
+                const value = emoji.repeat(this.selectedHost.length);                
+                const template = this.selectedHost.length !== 0 ? `${'<span>Congratulations!</span>' + '<p>'}${emoji + name + emoji}</p>` : 'N/A';
+
                 elem.textContent = value;
-                const template = this.selectedHost.length !== 0 ? `${'<span>Congratulations!</span>' + '<p>'}${val}</p>` : 'N/A';
 
                 setTimeout(() => {
                     elem.innerHTML = template;
                 }, 500);
             },
             initialsLastName(name) {
-                return `${name.substring(0, 1).toUpperCase()}.`;
+                return `${name.substring(0, 1).toUpperCase()}`;
             },
-            toggleModal() {
-                this.showModal = !this.showModal
+            showTheModal() {
+                this.showModal = true
+                document.body.classList.add('modal-open');
+            },
+            hideTheModal() {
+                this.showModal = false;
+                document.body.classList.remove('modal-open');
             },
             changeIsSelected(person) {
                 person.isSelected = !person.isSelected;
@@ -149,11 +161,11 @@
                 person.isSelected = false;
                 person.archive = true;          
             },
-            addPerson() {
-                this.toggleModal();
-                const {firstName, lastName, isSelected = true, archive = false} = this;
-                this.possibleHost.push({firstName, lastName, isSelected, archive});
-                this.firstName = this.lastName = '';
+            addPerson() {                
+                const {firstName, lastName, nickname, isSelected = true, archive = false} = this;
+                this.possibleHost.push({firstName, lastName, nickname, isSelected, archive});
+                this.firstName = this.lastName = this.nickname = '';
+                this.hideTheModal();
             }
         },
     };
