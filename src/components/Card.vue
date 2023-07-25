@@ -10,18 +10,14 @@
                 v-html="displayPersonName()"/>
       </div>
 
-      <teleport v-if="showModalArchive" to='body'>
-        <Modal :title="'Are you sure?'" @close="toggleArchiveModal">
-            <template v-slot:modal-content>
-              <p class="text-center">By clicking <b>'Yes'</b> you will archive <b v-html="displayPersonName()"/>.</p>
+      <Modal :title="'Are you sure?'" :openModal="showModalArchive" @close="toggleArchiveModal">
+          <p class="text-center">By clicking <b>'Yes'</b> you will archive <b v-html="displayPersonName()"/>.</p>
 
-                <div class="btn-group">
-                  <button class="btn" @click="changeArchive">Yes</button>
-                  <button class="btn btn-secondary" @click="toggleArchiveModal">No</button>
-                </div>
-            </template>
-        </Modal>
-    </teleport>
+            <div class="btn-group">
+              <button class="btn" @click="changeArchive">Yes</button>
+              <button class="btn btn-secondary" @click="toggleArchiveModal">No</button>
+            </div>
+      </Modal>
 </template>
   
   <script>
@@ -63,8 +59,7 @@
       toggleArchiveModal() {
           this.showModalArchive = !this.showModalArchive
       },
-      displayPersonName()
-      {
+      displayPersonName() {
         const personName = this.person.nickname != '' ? `${this.person.nickname}` : `${this.person.firstName} ${this.initialsLastName(this.person.lastName)}`
         return personName;
       }
@@ -78,7 +73,7 @@
         display: grid;
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
         margin: 0px auto;
-        padding: 30px 0 30px;
+        padding: 25px 0;
         width: calc(200px * 6);
     }
 

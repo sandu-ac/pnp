@@ -1,11 +1,13 @@
 <template>
-    <div class="backdrop" @click.self.prevent="closeModal">
-        <div class="modal">
-            <span v-if="showIconClose" class="icon-x" @click.self.prevent="closeModal"></span>
-            <h1>{{ title }}</h1>
-            <slot name="modal-content"></slot>
-        </div>
-    </div>
+    <teleport v-if="openModal" to='body'>
+      <div class="backdrop" @click.self.prevent="openCloseModal">
+          <div class="modal">
+              <span v-if="showIconClose" class="icon-x" @click.self.prevent="openCloseModal"></span>
+              <h1>{{ title }}</h1>
+              <slot></slot>
+          </div>
+      </div>
+    </teleport>
   </template>
   
   <script>
@@ -20,17 +22,21 @@
         type: Boolean,
         default: false
       },
+      openModal: {
+        type: Boolean,
+        default: false
+      }
     },
     emits :{
       close: null
     },
     methods: {
-      closeModal () {
+       openCloseModal () {
         this.$emit('close')
       },
       initialsLastName(name) {
-            return `${name.substring(0, 1).toUpperCase()}.`;
-        },
+        return `${name.substring(0, 1).toUpperCase()}.`;
+      },
     }
   }
   </script>

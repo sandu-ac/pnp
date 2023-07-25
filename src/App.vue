@@ -1,16 +1,15 @@
 <template>
+    <div class="title">
+        {{ title }}
+    </div>
     <div class="container">
         <div v-if="checkBtnDisabled 
                     && possibleHost.filter(i =>  i.archive === false).length > 1" 
             class="error">
-            Choose at least 2 persons from the total of {{ possibleHost.filter(i =>  i.archive === false).length }} available.
+                Choose at least 2 persons from the total of {{ possibleHost.filter(i =>  i.archive === false).length }} available.
         </div>
 
-        <div class="title">
-            {{ title }}
-        </div>
-
-        <div v-show="!showHide" class="cards">            
+        <div v-show="!showHide" class="cards">
             <card v-for="(person, index) in possibleHost.filter(i =>  i.archive === false)"
                   :key="index"
                   :person="person"
@@ -39,30 +38,26 @@
         </div>
     </div>
 
-    <teleport v-if="showModal" to='body'>
-        <Modal :title="'Add a new person'" @close="hideTheModal">
-            <template v-slot:modal-content>
-                <form @submit.prevent="addPerson">
-                    <div class="form-group">
-                        <label for="firstName">First name</label>
-                        <input v-model="firstName" id="firstName" name="firstName" type="text" />
-                    </div>
-                    <div class="form-group">
-                        <label for="lastName">Last name</label>
-                        <input v-model="lastName" id="lastName" name="lastName" type="text" />
-                    </div>
-                    <div class="form-group">
-                        <label for="nickname">Nickname</label>
-                        <input v-model="nickname" id="nickname" name="nickname" type="text" />
-                    </div>
-                    <div class="btn-group">
-                        <button class="btn">Add</button>
-                        <button class="btn btn-secondary" @click="hideTheModal">Cancel</button>
-                    </div>
-                </form>
-            </template>
-        </Modal>
-    </teleport>
+    <Modal :title="'Add a new person'" :openModal="showModal" @close="hideTheModal">
+        <form @submit.prevent="addPerson">
+            <div class="form-group">
+                <label for="firstName">First name</label>
+                <input v-model="firstName" id="firstName" name="firstName" type="text" />
+            </div>
+            <div class="form-group">
+                <label for="lastName">Last name</label>
+                <input v-model="lastName" id="lastName" name="lastName" type="text" />
+            </div>
+            <div class="form-group">
+                <label for="nickname">Nickname</label>
+                <input v-model="nickname" id="nickname" name="nickname" type="text" />
+            </div>
+            <div class="btn-group">
+                <button class="btn">Add</button>
+                <button class="btn btn-secondary" @click="hideTheModal">Cancel</button>
+            </div>
+        </form>
+    </Modal>
 </template>
 
 <script>
@@ -83,6 +78,7 @@
                 btnDisabled: false,
                 firstName: '',
                 lastName: '',
+                nickname: '',
                 possibleHost: [
                     { firstName: 'Alexandru', lastName: 'Ciobotaru', nickname:'Alex C', isSelected: true, archive: false },
                     { firstName: 'Alex', lastName: 'Bedford', nickname:'', isSelected: true, archive: false },
@@ -165,7 +161,6 @@
                 const {firstName, lastName, nickname, isSelected = true, archive = false} = this;
                 this.possibleHost.push({firstName, lastName, nickname, isSelected, archive});
                 this.firstName = this.lastName = this.nickname = '';
-                this.hideTheModal();
             }
         },
     };

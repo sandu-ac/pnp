@@ -57,9 +57,10 @@ h1 {
 
 .container {
     display: block;
+    position: relative;
     width: 1200px;
-    margin: 50px auto;
-    padding: 10px;
+    margin: 0px auto;
+    padding: 0px;
 }
 
 .title {
@@ -68,19 +69,20 @@ h1 {
     font-weight: 700;
     text-shadow: 0 1px 0 #ccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9, 0 5px 0 #aaa, 0 6px 1px rgba(0, 0, 0, 0.1), 0 0 5px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.3), 0 3px 5px rgba(0, 0, 0, 0.2), 0 5px 10px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.2), 0 20px 20px rgba(0, 0, 0, 0.15);
     text-align: center;
-    margin-bottom: 15px;
+    margin-top: 50px;
+    margin-bottom: 25px;
 }
 
 .error {
-    position: absolute;
+    position: fixed;
     color: #ffffff;
     background-color: #f54337;
-    margin: 0 auto 25px;
+    margin: 0 auto;
     top: 0;
     left: 0;
     right: 0;
     font-weight: 700;
-    padding: 5px 5px;
+    padding: 0px;
     text-align: center;
     max-width: 700px;
 }
